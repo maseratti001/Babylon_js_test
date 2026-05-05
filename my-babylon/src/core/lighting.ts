@@ -27,19 +27,19 @@ export function createLighting(scene: Scene) {
 /* ─── 프로덕션: 풀 라이팅 ─── */
 function createFullLighting(scene: Scene) {
 	const sun = new DirectionalLight("sun", new Vector3(1, -2, 1).normalize(), scene);
-	sun.intensity = 1;
+	sun.intensity = 4;
 	sun.diffuse   = new Color3(1.0, 0.92, 0.78);
 	sun.specular  = new Color3(1.0, 0.95, 0.85);
 	sun.position  = new Vector3(-15, 18, -10);
 
 	const fill = new DirectionalLight("fill", new Vector3(-1, -2, -1).normalize(), scene);
-	fill.intensity = 1;
+	fill.intensity = 4;
 	fill.diffuse   = new Color3(0.95, 0.95, 1.0);
 	fill.specular  = new Color3(0.2, 0.2, 0.2);
 	fill.position  = new Vector3(15, 18, 10);
 
 	const ambient = new HemisphericLight("ambient", new Vector3(0, 1, 0), scene);
-	ambient.intensity   = 0.05;
+	ambient.intensity   = 0.1;
 	ambient.diffuse     = new Color3(0.9, 0.88, 0.82);
 	ambient.groundColor = new Color3(0.5, 0.45, 0.38);
 
