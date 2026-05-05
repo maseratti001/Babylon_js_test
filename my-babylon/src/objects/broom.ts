@@ -39,7 +39,5 @@ export async function createBrooms(scene: Scene, shadowGen: ShadowGenerator): Pr
             shadowGen.addShadowCaster(child);
             child.receiveShadows = true;
         });
-        shadowGen.addShadowCaster(clone);
-        clone.receiveShadows = true;
     });
 }

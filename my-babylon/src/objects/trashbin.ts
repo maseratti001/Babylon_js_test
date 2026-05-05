@@ -25,6 +25,15 @@ export async function createTrashbins(scene: Scene, shadowGen: ShadowGenerator):
     }
 
     const root = cache.trashbin;
+    root.getChildMeshes().forEach((child) => {
+        const mat = child.material as PBRMaterial;
+
+        if (mat.albedoTexture) {
+            mat.albedoTexture.level = 0.7;
+        }
+        mat.metallic = 0.0;
+        mat.roughness = 0.95;
+    })
 
     PLACEMENTS.forEach((cfg, i) => {
         const clone = root.clone(`trashbin_${i}`, null)!;
@@ -39,7 +48,5 @@ export async function createTrashbins(scene: Scene, shadowGen: ShadowGenerator):
             shadowGen.addShadowCaster(child);
             child.receiveShadows = true;
         });
-        shadowGen.addShadowCaster(clone);
-        clone.receiveShadows = true;
     });
 }

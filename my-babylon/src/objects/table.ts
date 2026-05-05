@@ -32,12 +32,12 @@ export async function createTables(scene: Scene, shadowGen: ShadowGenerator): Pr
         if (!mat) return;
 
         if (mat.albedoTexture) {
-            mat.albedoTexture.level = 1.2;
+            mat.albedoTexture.level = 0.7;
         }
 
-        mat.albedoColor = Color3.FromHexString("#878f1f");
+        mat.albedoColor = Color3.FromHexString("#a18b0a");
         mat.metallic = 0.0;
-        mat.roughness = 0.9;
+        mat.roughness = 0.95;
     });
         
 
@@ -50,11 +50,9 @@ export async function createTables(scene: Scene, shadowGen: ShadowGenerator): Pr
         clone.rotation = new Vector3(0, cfg.rotY, 0);
         clone.scaling  = new Vector3(-cfg.scale, cfg.scale, cfg.scale);
         
+        shadowGen.addShadowCaster(clone, true);
         clone.getChildMeshes().forEach((child) => {
-            shadowGen.addShadowCaster(child);
             child.receiveShadows = true;
         });
-        shadowGen.addShadowCaster(clone);
-        clone.receiveShadows = true;
     });
 }

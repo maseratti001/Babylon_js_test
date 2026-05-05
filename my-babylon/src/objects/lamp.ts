@@ -1,3 +1,5 @@
+// objects/lamp.ts
+
 import { Mesh, SceneLoader, Vector3, Scene, ShadowGenerator } from "@babylonjs/core";
 import "@babylonjs/loaders/glTF";
 
@@ -39,7 +41,5 @@ export async function createLamps(scene: Scene, shadowGen: ShadowGenerator): Pro
             shadowGen.addShadowCaster(child);
             child.receiveShadows = true;
         });
-        shadowGen.addShadowCaster(clone);
-        clone.receiveShadows = true;
     });
 }

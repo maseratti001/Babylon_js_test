@@ -14,34 +14,35 @@ import "@babylonjs/loaders/glTF";
 /* ─── 배치 인터페이스 ─── */
 interface Placement {
     x: number;
+    y: number;
     z: number;
     rotY: number;
     scale: number;
 }
 
-const SCALE = 6;
+const SCALE = 12;
 
 
 const PLACEMENTS: Placement[] = [
     // 뒷줄 2개 (칠판 쪽 바라봄)
-    { x: -5,  z:   0, rotY:  Math.PI,       scale: SCALE },
-    { x:  5,  z:   0, rotY:  Math.PI,       scale: SCALE },
+    { x: -5, y: 2.8, z:   0, rotY:  Math.PI,       scale: SCALE },
+    { x:  5, y: 2.8, z:   0, rotY:  Math.PI,       scale: SCALE },
 
     // 중간 좌측
-    { x: -10, z:  -6, rotY:  Math.PI * 0.5, scale: SCALE },
+    { x: -14, y: 2.8, z:  -9, rotY:  Math.PI * 0.5, scale: SCALE },
 
     // 중간 우측
-    { x:  10, z:  -6, rotY: -Math.PI * 0.5, scale: SCALE },
+    { x:  14, y: 2.8, z:  -9, rotY: -Math.PI * 0.5, scale: SCALE },
 
     // 앞줄 2개
-    { x: -5,  z: -12, rotY:  0,             scale: SCALE },
-    { x:  5,  z: -12, rotY:  0,             scale: SCALE },
+    { x: -5, y: 2.8, z: -18, rotY:  0,             scale: SCALE },
+    { x:  5, y: 2.8, z: -18, rotY:  0,             scale: SCALE },
 
     // 오른쪽 하단 단독
-    { x:  47, z: -30, rotY: -Math.PI * 0.5, scale: SCALE },
+    { x:  50,y: 2.8, z: -29.5, rotY: -Math.PI * 0.5, scale: SCALE },
 
     // 책상 전용
-    { x:  29, z: 26, rotY: 0, scale: SCALE },
+    { x:  29,y: 2.8, z: 24, rotY: 0, scale: SCALE },
 ];
 const cache: Record<string, Mesh> = ((window as any).__tmplCache ??= {});
 
@@ -57,17 +58,15 @@ export async function createChairs(scene: Scene, shadowGen: ShadowGenerator): Pr
     const root = cache.chair;
     const children = root.getChildMeshes() as Mesh[];
     children.forEach((child) => {
-        const mat = child.material;
-        if (!(mat instanceof PBRMaterial)) return;
-
+        const mat = child.material as PBRMaterial
         if (mat.albedoTexture) {
-            mat.albedoTexture.level = 0.7; // 기본 1.0, 낮을수록 어두움
+            mat.albedoTexture.level = 1.0; // 기본 1.0, 낮을수록 어두움
         }
     });
 
     PLACEMENTS.forEach((cfg, i) => {
         const parent = new TransformNode(`chair_${i}`, scene);
-        parent.position = new Vector3(cfg.x, 0, cfg.z);
+        parent.position = new Vector3(cfg.x, cfg.y, cfg.z);
         parent.rotation = new Vector3(0, cfg.rotY, 0);
         parent.scaling  = new Vector3(cfg.scale, cfg.scale, cfg.scale);
         parent.metadata = { hmr: true };

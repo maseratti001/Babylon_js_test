@@ -46,8 +46,8 @@ export function createRoom(scene: Scene, shadowGen: ShadowGenerator) {
         scene
     );
     const floorMat = new StandardMaterial("floorMat", scene);
-    floorMat.diffuseColor  = Color3.FromHexString("#d4a43d");
-    floorMat.specularColor = new Color3(0.10, 0.10, 0.10);
+    floorMat.diffuseColor  = Color3.FromHexString("#79602c");
+    floorMat.specularColor = new Color3(0.0, 0.0, 0.0);
 
     const floorTex = new Texture(floorTexturePath, scene);
     floorTex.uScale = 8;
@@ -112,7 +112,7 @@ export function createRoom(scene: Scene, shadowGen: ShadowGenerator) {
         );
         wall.position = position;
         wall.material = mat;
-        wall.receiveShadows = true;
+        wall.receiveShadows = false;
         return wall;
     };
 
@@ -149,7 +149,7 @@ export function createRoom(scene: Scene, shadowGen: ShadowGenerator) {
             pos.z + inwardOffset.z
         );
         bottom.material = moldingMat;
-        bottom.receiveShadows = true;
+        bottom.receiveShadows = false;
 
         // 상단 몰딩
         const top = MeshBuilder.CreateBox(
@@ -163,7 +163,7 @@ export function createRoom(scene: Scene, shadowGen: ShadowGenerator) {
             pos.z + inwardOffset.z
         );
         top.material = moldingMat;
-        top.receiveShadows = true;
+        top.receiveShadows = false;
     };
 
     /* ─── 가로벽 몰딩: 세로몰딩이 차지하는 공간(MOLDING_DEPTH)만큼만 줄이기 ─── */

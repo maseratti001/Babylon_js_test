@@ -46,7 +46,5 @@ export async function createChairfoldeds(scene: Scene, shadowGen: ShadowGenerato
             shadowGen.addShadowCaster(child);
             child.receiveShadows = true;
         });
-        shadowGen.addShadowCaster(clone);
-        clone.receiveShadows = true;
     });
 }

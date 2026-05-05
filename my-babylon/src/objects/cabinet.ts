@@ -34,7 +34,7 @@ export async function createCabinets(scene: Scene, shadowGen: ShadowGenerator): 
         if (!(mat instanceof PBRMaterial)) return;
 
         if (mat.albedoTexture) {
-            mat.albedoTexture.level = 1; // 기본 1.0, 낮을수록 어두움
+            mat.albedoTexture.level = 0.5; 
         }
     });
 

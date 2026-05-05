@@ -1,6 +1,6 @@
 // core/engine.ts
 
-import { Engine, Scene } from "@babylonjs/core";
+import { CubeTexture, Engine, Scene } from "@babylonjs/core";
 
 export function createEngine(canvas: HTMLCanvasElement) {
     const engine = new Engine(canvas, true, {
@@ -12,6 +12,7 @@ export function createEngine(canvas: HTMLCanvasElement) {
 
 export function createScene(engine: Engine): Scene {
     const scene = new Scene(engine);
+
     scene.clearColor.set(0, 0, 0, 1);
     return scene;
 }

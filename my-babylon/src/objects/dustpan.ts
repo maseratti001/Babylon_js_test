@@ -38,7 +38,5 @@ export async function createDustpans(scene: Scene, shadowGen: ShadowGenerator): 
             shadowGen.addShadowCaster(child);
             child.receiveShadows = true;
         });
-        shadowGen.addShadowCaster(clone);
-        clone.receiveShadows = true;
     });
 }

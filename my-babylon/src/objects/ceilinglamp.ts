@@ -12,7 +12,7 @@ interface Placement {
 const SCALE = 16;
 
 const PLACEMENTS: Placement[] = [
-    { x: -2, y: 7, z: 0, rotY: Math.PI / 2, scale: SCALE },
+    { x: -2, y: 10, z: 0, rotY: Math.PI / 2, scale: SCALE },
 ];
 const cache: Record<string, Mesh> = ((window as any).__tmplCache ??= {});
 
@@ -28,11 +28,7 @@ export async function createCeilingLamps(scene: Scene, shadowGen: ShadowGenerato
 
     root.getChildMeshes().forEach((child) => {
         const mat = child.material as PBRMaterial;
-        // if (mat?.albedoColor) {
-        //     if (mat.albedoTexture) {
-        //         mat.albedoTexture.level = 0.3; // 기본 1.0, 낮을수록 어두움
-        //     }
-        // }
+
     });
 
     PLACEMENTS.forEach((cfg, i) => {

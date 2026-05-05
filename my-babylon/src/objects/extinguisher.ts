@@ -34,8 +34,8 @@ export async function createExtinguishers(scene: Scene, shadowGen: ShadowGenerat
         if (mat.albedoTexture) {
             mat.albedoTexture.level = 1.0
         }
-        mat.metallic = 0.9;
-        mat.roughness = 0.0;
+        mat.metallic = 3.0;
+        mat.roughness = 0.5;
         mat.albedoColor = Color3.FromHexString("#fdfdfd");
     });
 

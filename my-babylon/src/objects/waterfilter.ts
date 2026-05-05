@@ -1,4 +1,4 @@
-import { Mesh, SceneLoader, Vector3, Scene, ShadowGenerator } from "@babylonjs/core";
+import { Mesh, SceneLoader, Vector3, Scene, ShadowGenerator, PBRMaterial, Color3 } from "@babylonjs/core";
 import "@babylonjs/loaders/glTF";
 
 interface Placement {
@@ -24,6 +24,15 @@ export async function createWaterfilters(scene: Scene, shadowGen: ShadowGenerato
     }
 
     const root = cache.waterfilter;
+    root.getChildMeshes().forEach((child) => {
+        const mat = child.material as PBRMaterial;
+
+        if (mat.albedoTexture) {
+            mat.albedoTexture.level = 0.8;
+        }
+        mat.metallic = 0.0;
+        mat.roughness = 0.95;
+    })
 
     PLACEMENTS.forEach((cfg, i) => {
         const clone = root.clone(`waterfilter_${i}`, null)!;
@@ -38,7 +47,5 @@ export async function createWaterfilters(scene: Scene, shadowGen: ShadowGenerato
             shadowGen.addShadowCaster(child);
             child.receiveShadows = true;
         });
-        shadowGen.addShadowCaster(clone);
-        clone.receiveShadows = true;
     });
 }

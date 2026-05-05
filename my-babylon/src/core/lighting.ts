@@ -27,40 +27,62 @@ export function createLighting(scene: Scene) {
 /* ─── 프로덕션: 풀 라이팅 ─── */
 function createFullLighting(scene: Scene) {
 	const sun = new DirectionalLight("sun", new Vector3(1, -2, 1).normalize(), scene);
-	sun.intensity = 5;
+	sun.intensity = 1;
 	sun.diffuse   = new Color3(1.0, 0.92, 0.78);
 	sun.specular  = new Color3(1.0, 0.95, 0.85);
-	sun.position  = new Vector3(-15, 5, -10);
+	sun.position  = new Vector3(-15, 18, -10);
+
+	const fill = new DirectionalLight("fill", new Vector3(-1, -2, -1).normalize(), scene);
+	fill.intensity = 1;
+	fill.diffuse   = new Color3(0.95, 0.95, 1.0);
+	fill.specular  = new Color3(0.2, 0.2, 0.2);
+	fill.position  = new Vector3(15, 18, 10);
 
 	const ambient = new HemisphericLight("ambient", new Vector3(0, 1, 0), scene);
-	ambient.intensity   = 1;
+	ambient.intensity   = 0.05;
 	ambient.diffuse     = new Color3(0.9, 0.88, 0.82);
 	ambient.groundColor = new Color3(0.5, 0.45, 0.38);
 
 	// const shadowGen = new ShadowGenerator(1024, sun);
 	// shadowGen.useBlurExponentialShadowMap = true;
 	// shadowGen.blurKernel = 48;
-	// shadowGen.darkness   = 0.35;
 	// shadowGen.bias       = 0.0001;
 	// shadowGen.normalBias = 0.008;
-
-	const shadowGen = new ShadowGenerator(1, sun);  // 최소 해상도
+	
+	const shadowGen = new ShadowGenerator(0, sun);  // 최소 해상도
     shadowGen.useBlurExponentialShadowMap = false;
+	shadowGen.darkness   = 1;
 
 	return { sun, shadowGen };
 }
 
 function createLampLighting(scene: Scene) {
-	const lamp = new PointLight("lamp", new Vector3(0, 0, 0), scene);
+    // 전체 기본 조명 (DirectionalLight — 그림자 담당)
+    // const main = new DirectionalLight("main",
+    //     new Vector3(-0.5, -1, -0.5).normalize(), scene);
+    // main.intensity = 0.1;
+    // main.diffuse   = new Color3(1.0, 0.95, 0.85);
+    // main.position  = new Vector3(0, 20, 0);
 
-	lamp.intensity = 5;
+    // 램프 분위기용 (PointLight — 그림자 없음, 그냥 색감)
+    const lampGlow = new PointLight("lampGlow",
+        new Vector3(36.3, 6, 30.6), scene);
+    lampGlow.intensity = 10;
+    lampGlow.range     = 50;
+    lampGlow.diffuse   = new Color3(1.0, 1.0, 1.0);
 
-	const shadowGen = new ShadowGenerator(1024, lamp);
+    const ambient = new HemisphericLight("ambient",
+        new Vector3(0, 1, 0), scene);
+    ambient.intensity   = 0.00;
+    ambient.diffuse     = new Color3(0.9, 0.88, 0.82);
+    ambient.groundColor = new Color3(0.3, 0.25, 0.2);
+
+    // 그림자는 DirectionalLight로
+    const shadowGen = new ShadowGenerator(512, lampGlow);
 	shadowGen.useBlurExponentialShadowMap = true;
-	shadowGen.blurKernel = 48;
-	shadowGen.darkness   = 0.35;
-	shadowGen.bias       = 0.0001;
-	shadowGen.normalBias = 0.008;
+	shadowGen.blurKernel = 16; // 32 → 16
+	shadowGen.darkness   = 0.5;
 
-	return {lamp, shadowGen };
+    return { shadowGen };
 }
+
