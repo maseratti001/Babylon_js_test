@@ -112,6 +112,7 @@ import { createBrooms } from "./objects/broom";
 import { createDustpans } from "./objects/dustpan";
 import { createMopsinks } from "./objects/mopsink";
 import { createLamps } from "./objects/lamp";
+import { createFlashlight } from "./core/flashlight";
 
 DracoCompression.Configuration.decoder = {
     wasmUrl: "https://cdn.babylonjs.com/draco_wasm_wrapper_gltf.js",
@@ -153,11 +154,11 @@ async function bootstrap() {
             createChairfoldeds(scene, shadowGen),
             createExtinguishers(scene, shadowGen),
             createChairs(scene, shadowGen),
-            createDoors(scene, shadowGen),
-            createBrooms(scene, shadowGen),
-            createDustpans(scene, shadowGen),
-            createMopsinks(scene, shadowGen),
-            createLamps(scene, shadowGen),
+            // createDoors(scene, shadowGen),
+            // createBrooms(scene, shadowGen),
+            // createDustpans(scene, shadowGen),
+            // createMopsinks(scene, shadowGen),
+            // createLamps(scene, shadowGen),
         ]);
         console.timeEnd("load");
 
@@ -166,6 +167,9 @@ async function bootstrap() {
 
         // 3) 플레이어 (바닥 물리가 이미 존재 → 안 빠짐)
         ({ camera } = createPlayer(scene, canvas));
+
+        // 4) 손전등 (플레이어 카메라에 부착)          ← 추가
+        createFlashlight(scene, camera);
 
         createPipeline(scene, camera);
         engine.runRenderLoop(() => scene.render());
